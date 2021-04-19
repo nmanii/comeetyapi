@@ -1,0 +1,166 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    jms_serializer.form_error_handler.class: 'AppBundle\Handler\FormErrorHandler'
+    jms_serializer.camel_case_naming_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+    default_repository.class: Doctrine\ORM\EntityRepository
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    default_mailer: main
+    mailers:
+        main:
+            transport: "%mailer_transport%"
+            host:      "%mailer_host%"
+            username:  "%mailer_user%"
+            password:  "%mailer_password%"
+            encryption: "%mailer_encryption%"
+            port: "%mailer_port%"
+            delivery_address: "%mailer_delivery_address%"
+            spool:     { type: memory }
+        smtp_mailer1:
+            transport: "smtp"
+            host:      "%mailer1_host%"
+            username:  "%mailer1_user%"
+            password:  "%mailer1_password%"
+            encryption: "%mailer1_encryption%"
+            port: "%mailer1_port%"
+            delivery_address: "%mailer1_delivery_address%"
+            spool:     { type: memory }
+
+
+fos_rest:
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml:  false
+        mime_types:
+            json: ['application/json']
+    routing_loader:
+        default_format: json
+        include_format: false
+    serializer:
+        serialize_null: true
+        groups: ["Default"]
+    param_fetcher_listener: true
+    body_listener: true
+    access_denied_listener:
+        json: true
+    body_converter:
+        enabled: true
+    exception:
+        enabled: true
+        messages:
+            Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException: true
+            Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException: true
+
+# JMS Serializer
+jms_serializer:
+    metadata:
+        auto_detection: true
+
+
+# Lexik JWT Authentication
+lexik_jwt_authentication:
+    private_key_path:   %jwt_private_key_path%
+    public_key_path:    %jwt_public_key_path%
+    pass_phrase:        %jwt_key_pass_phrase%
+    token_ttl:          %jwt_token_ttl%
+nelmio_cors:
+        defaults:
+            allow_credentials: true
+            allow_origin: []
+            allow_headers: []
+            allow_methods: []
+            expose_headers: []
+            max_age: 0
+            hosts: []
+            origin_regex: false
+        paths:
+            '^/':
+                allow_origin: ['*']
+                allow_headers: ['*']
+                allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'PATCH']
+                max_age: 3600
+guzzle:
+    clients:
+        google_maps_api:
+            base_url: https://maps.googleapis.com
+        sendgrid_api:
+            base_url: https://api.sendgrid.com/
+        app_notifier:
+            base_url: https://fcm.googleapis.com/
+        discourse:
+            base_url: %discourse.host%
+
+welp_mailchimp:
+    api_key: %welp_mailchimp_api_key%
+    lists:
+      %mailchimp_active_subscriber_list_id%:
+          subscriber_provider: 'mailchimp_active_subscriber_provider'
+      %mailchimp_non_confirmed_list_id%:
+          subscriber_provider: 'mailchimp_non_confirmed_subscriber_provider'

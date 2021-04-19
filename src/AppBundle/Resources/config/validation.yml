@@ -1,0 +1,72 @@
+AppBundle\Entity\User:
+    getters:
+        email:
+            - NotBlank:
+            - Email:
+        plainPassword:
+            - NotBlank:
+AppBundle\Entity\UserLanguage:
+    getters:
+        level:
+            - NotBlank:
+        language:
+            - NotBlank:
+        user:
+            - NotBlank:
+AppBundle\Entity\UserProfile:
+    getters:
+        firstName:
+            - NotBlank:
+        birthDate:
+            - NotBlank:
+            - Date:
+        nativeCountry:
+            - NotBlank:
+            - Country:
+AppBundle\Entity\Event:
+    getters:
+        title:
+            - NotBlank:
+        startDateTime:
+            - NotBlank:
+            - Date:
+        address:
+            - NotBlank:
+AppBundle\Entity\CompanyMessage:
+    getters:
+        subject:
+            - NotBlank:
+        content:
+            - NotBlank:
+        senderEmail:
+            - NotBlank:
+            - Email:
+        senderName:
+            - NotBlank:
+AppBundle\Entity\EventFeedback:
+    getters:
+        rating:
+            - NotBlank:
+        category:
+            - NotBlank:
+AppBundle\Entity\VenueFeedback:
+    getters:
+        rating:
+            - NotBlank:
+        category:
+            - NotBlank:
+AppBundle\Entity\EventMessage:
+    getters:
+        content:
+            - NotBlank:
+AppBundle\Entity\CommunityInvitation:
+    getters:
+        firstName:
+            - NotBlank:
+        email:
+            - NotBlank:
+            - Email:
+AppBundle\Entity\UserLink:
+    getters:
+        type:
+            - NotBlank:

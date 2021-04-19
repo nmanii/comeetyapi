@@ -1,0 +1,13 @@
+AppBundle\Entity\UserLink:
+    exclusion_policy: ALL
+    properties:
+        id:
+            groups: [Default]
+        user:
+             groups: [Default]
+        targetUser:
+            groups: [Default]
+        creationDateTime:
+            groups: [Default]
+        type:
+            groups: [Default]

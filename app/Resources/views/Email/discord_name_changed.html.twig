@@ -1,0 +1,13 @@
+{% extends 'Email/base.html.twig' %}
+
+{% block title %}Discord access to change{% endblock %}
+
+{% block mailTitle %}Discord access to change{% endblock %}
+
+{% block mailContent %}
+  <table>
+  <tr><td colspan="2">Discord access to change</td></tr>
+  <tr><td colspan="2">By {{ userProfile.user.id  }} - {{ userProfile.FirstName  }}</td></tr>
+  <tr><td>old name: {{ oldDiscordName }}</td></tr>
+  <tr><td>new name: {{ userProfile.DiscordName }}</td></tr>
+{% endblock %}

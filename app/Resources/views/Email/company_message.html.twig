@@ -1,0 +1,10 @@
+<html>
+<body>
+    <p>
+        From: {{ companyMessage.senderName }} ({{ companyMessage.senderEmail }}) {% if userId is defined %}User id : {{ userId }}{% endif %}
+    </p>
+    <p>
+        {{ companyMessage.content }}
+    </p>
+</body>
+</html>

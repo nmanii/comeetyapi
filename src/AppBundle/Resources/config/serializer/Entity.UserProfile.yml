@@ -1,0 +1,23 @@
+AppBundle\Entity\UserProfile:
+    exclusion_policy: ALL
+    properties:
+        firstName:
+            expose: true
+            groups: [Default, NotAuthenticated]
+        lastName:
+            expose: true
+        birthDate:
+            expose: true
+            groups: [user_private]
+        gender :
+            expose: true
+        description :
+            expose: true
+        nativeCountry :
+            expose: true
+        user:
+            expose: true
+        motto:
+            expose: true
+        discordName:
+            expose: true

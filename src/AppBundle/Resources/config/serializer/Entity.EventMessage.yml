@@ -1,0 +1,15 @@
+AppBundle\Entity\EventMessage:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        user:
+            expose: true
+        event:
+            expose: true
+        creationDateTime:
+            expose: true
+        content:
+            expose: true
+        private:
+            expose: true

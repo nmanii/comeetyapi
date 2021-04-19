@@ -1,0 +1,49 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        database_provider:
+            entity:
+                class: AppBundle:User
+                property: username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        api:
+            anonymous: ~
+            pattern: ^/
+            guard:
+                authenticators:
+                    - jwt_authenticator
+            stateless: true
+
+    access_control:
+        - { path: /token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users$, methods: [POST, PUT], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/password-reset-request$, methods: [PUT], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/password$, methods: [PUT], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/events$, methods: [GET], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/events/past$, methods: [GET], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/events/[0-9]+$, methods: [GET], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/events/[0-9]+/messages, methods: [GET], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/events/[0-9]+/feedback, methods: [GET], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/events/[0-9]+/users, methods: [GET], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/company/messages$, methods: [POST], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users/[0-9]+/confirmation$, methods: [PUT], roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: [ROLE_USER] }
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_USER_PRO: ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH, ROLE_SUBSCRIBER_STANDARD, ROLE_USER_PRO]
+

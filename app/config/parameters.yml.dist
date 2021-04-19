@@ -1,0 +1,50 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_delivery_address: ~
+    mailer_encryption: ~
+    mailer_port: ~
+
+    mailer1_host: ~
+    mailer1_user: ~
+    mailer1_password: ~
+    mailer1_delivery_address: null
+    mailer1_encryption: ~
+    mailer1_port: ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    jwt_private_key_path: %kernel.root_dir%/var/jwt/private.pem   # ssh private key path
+    jwt_public_key_path:  %kernel.root_dir%/var/jwt/public.pem    # ssh public key path
+    jwt_key_pass_phrase:  ''                                      # ssh key pass phrase
+    jwt_token_ttl:        86400
+
+    authentication.cookie.domain: ~
+    authentication.cookie.name: ~
+    web_client.base_url:
+    web_client.event_image_url:
+    locale: en
+
+    welp_mailchimp_api_key: FakeKey
+    mailchimp_active_subscriber_list_id:
+    mailchimp_non_confirmed_list_id:
+    sendgrid.api_key:
+    notifier.key:
+    discourse_sso_key:
+    discourse.admin_username:
+    discourse.admin_api_key:
+    discourse.host:

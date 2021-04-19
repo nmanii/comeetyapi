@@ -1,0 +1,37 @@
+AppBundle\Entity\Event:
+    exclusion_policy: ALL
+    properties:
+        id:
+            groups: [Default, NotAuthenticated]
+        title:
+            groups: [Default, NotAuthenticated]
+        startDateTime:
+            groups: [Default, NotAuthenticated]
+        startDateTimeUTC:
+            groups: [Default, NotAuthenticated]
+        user:
+            groups: [Default, NotAuthenticated]
+        address:
+            groups: [Default, NotAuthenticated]
+        placeName:
+            groups: [Default, NotAuthenticated]
+        description:
+            groups: [Default, NotAuthenticated]
+        maximumCapacity:
+            groups: [Default, NotAuthenticated]
+        creationDateTime:
+            groups: [Default]
+        placeExternalId:
+            groups: [Default]
+        public:
+            groups: [Default]
+        eventCategory:
+            groups: [Default, NotAuthenticated]
+        cover:
+            groups: [Default, NotAuthenticated]
+
+    virtual_properties:
+        getPlaceExternalId:
+            serialized_name: placeExternalId
+            type: string
+

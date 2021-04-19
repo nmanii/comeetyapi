@@ -1,0 +1,9 @@
+AppBundle\Entity\UserLanguage:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        language:
+            expose: true
+        level:
+            expose: true

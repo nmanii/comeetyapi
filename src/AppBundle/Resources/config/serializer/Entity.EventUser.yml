@@ -1,0 +1,9 @@
+AppBundle\Entity\EventUser:
+    exclusion_policy: ALL
+    properties:
+        user:
+            expose: true
+    virtual_properties:
+        getState:
+            serialized_name: state
+            type: string

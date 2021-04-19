@@ -1,0 +1,17 @@
+AppBundle\Entity\CommunityInvitation:
+    exclusion_policy: ALL
+    properties:
+        id:
+            groups: [Default]
+        firstName:
+            groups: [Default]
+        lastName:
+            groups: [Default]
+        email:
+            groups: [Default]
+        creationDateTime:
+            groups: [Default]
+        event:
+            groups: [Default]
+        sender:
+            groups: [Default]

@@ -1,0 +1,114 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    jwt_authenticator :
+        class: AppBundle\Security\JwtAuthenticator
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@lexik_jwt_authentication.jwt_encoder"
+            - "%authentication.cookie.name%"
+    mail.manager:
+        class: AppBundle\Service\MailService
+        arguments:
+            - "@mailer"
+            - "@swiftmailer.mailer.smtp_mailer1"
+            - "@templating"
+            - "@doctrine.orm.default_entity_manager"
+            - "%web_client.base_url%"
+            - "@sendgrid_template_email.service"
+            - "@mail_logger"
+    password_reset.token.manager:
+        class: AppBundle\Service\PasswordTokenService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+    subscription.service:
+        class: AppBundle\Service\SubscriptionService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+    event.service:
+        class: AppBundle\Service\EventService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+    google_place.service:
+        class: AppBundle\Service\GooglePlaceService
+        arguments:
+          - "@guzzle.client.google_maps_api"
+    google_timezone.service:
+        class: AppBundle\Service\GoogleTimeZoneService
+        arguments:
+          - "@guzzle.client.google_maps_api"
+    location.service:
+        class: AppBundle\Service\LocationService
+        arguments:
+          - "@doctrine.orm.default_entity_manager"
+          - "@google_place.service"
+          - "@google_timezone.service"
+    user_repository:
+        class:  %default_repository.class%
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\User
+    mailchimp_active_subscriber_provider:
+            class: AppBundle\Provider\ActiveSubscriberProvider
+            arguments: ["@user_repository"]
+    user_confirmation_repository:
+            class:  %default_repository.class%
+            factory: ["@doctrine", getRepository]
+            arguments:
+                - AppBundle\Entity\UserConfirmation
+    mailchimp_non_confirmed_subscriber_provider:
+            class: AppBundle\Provider\NonConfirmedSubscriberProvider
+            arguments: ["@user_confirmation_repository"]
+    sendgrid_template_email.service:
+        class: AppBundle\Service\SendGridTemplateEmailService
+        arguments:
+          - "@guzzle.client.sendgrid_api"
+          - "%sendgrid.api_key%"
+          -
+              'welcome': 'f6476bbf-f744-4819-814d-0b22c5ab0701'
+              'notification_event_creation_to_follower': 'bc276f8e-b67a-430a-ab56-1749baed01a3'
+              'notification_participant_registration_to_organizer': '9bd8062f-f432-4c4e-a140-8549ff57bb88'
+              'event_creation_request_user_never_created': '4b77fd79-c362-4b74-a738-35e67a08cc97'
+              'zero_trust_score': 'f4e4f13c-6ac6-420a-b4fb-df5cffe6258e'
+              'no_show_reported_warning': 'ef3f0ffa-f004-4a1d-9c73-ea16245f4bec'
+              'event_invitation_by_organiser': '99e8e8ac-fe0d-4b61-aab0-dcb9e05245b0'
+              'event_invitation_by_participant': 'c5f171d0-f656-4f4a-82dd-4f0ac9b20f3a'
+              'event_creation_request_user_already_created': '228f9de0-f166-4cb8-a821-c15f171d50e5'
+              'founder_welcome': '7c10448e-8e06-4f85-a35e-725644627616'
+              'account_confirmation': 'c2136f0f-2a30-45e6-a1a6-db63786a3e85'
+              'event_reminder_1day': '99a41b67-6f9f-46a7-9033-57122fcf0f31'
+              'event_reminder_organiser_1day': 'd-c34f29606183431881cd187218bf7343'
+              'founder_non_participation_enquiry': 'a34bd515-889f-4286-9af1-ae82e83ff2c1'
+    mail_logger:
+        class: AppBundle\Service\MailLogger
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+    serializer.event:
+            class: AppBundle\Serializer\Event
+            arguments: ["%web_client.event_image_url%"]
+            tags:
+                - { name: jms_serializer.event_subscriber }
+    app_notification.service:
+        class: AppBundle\Service\AppNotificationService
+        arguments:
+          - "@app_notifier"
+          - "@doctrine.orm.default_entity_manager"
+          - "%web_client.base_url%"
+    app_notifier:
+        class: AppBundle\Service\AppNotifier
+        arguments:
+          - "@guzzle.client.app_notifier"
+          - "%notifier.key%"
+    discourse.service:
+        class: AppBundle\Service\DiscourseClient
+        arguments:
+            - "%discourse.admin_username%"
+            - "%discourse.admin_api_key%"
+            - "@guzzle.client.discourse"
+

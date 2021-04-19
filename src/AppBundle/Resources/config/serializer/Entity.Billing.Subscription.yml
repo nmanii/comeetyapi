@@ -1,0 +1,13 @@
+AppBundle\Entity\Billing\Subscription:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        plan:
+            expose: true
+        startDate:
+            expose: true
+        endDate:
+            expose: true
+        renewDate:
+            expose: true

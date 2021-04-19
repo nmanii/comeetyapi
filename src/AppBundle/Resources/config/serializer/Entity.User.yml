@@ -1,0 +1,23 @@
+AppBundle\Entity\User:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [Default, NotAuthenticated]
+        username:
+            groups: [user_private]
+        email:
+            groups: [user_private]
+        active :
+            groups: [user_private]
+        confirmed :
+            groups: [user_private]
+        roles:
+            groups: [user_private]
+        creationDateTime:
+            expose: true
+        profile:
+            expose: true
+            groups: [Default, NotAuthenticated]
+        statistics:
+            expose: true

@@ -1,0 +1,15 @@
+AppBundle\Entity\UserStatistics:
+    exclusion_policy: ALL
+    properties:
+        participationCount:
+            groups: [Default]
+        eventOrganisationCount:
+            groups: [Default]
+        commitmentScore:
+            groups: [Default]
+        subscriberCount:
+            groups: [user_private]
+    virtual_properties:
+        getParticipationLevel:
+            serialized_name: participationLevel
+            type: integer
