@@ -65,10 +65,10 @@ class MailService
     {
         switch($sender) {
             case 'founder':
-                $information = ['team@comeety.net' => 'Johan - Comeety.net'];
+                $information = ['team@comeety.net' => 'Founder1 - Comeety.net'];
                 break;
             case 'founder2':
-                $information = ['manii@comeety.net' => 'Manii - Comeety.net'];
+                $information = ['manii@comeety.net' => 'Founder2 - Comeety.net'];
                 break;
             case 'team':
                 $information = ['team@comeety.net' => 'Comeety.net team'];
@@ -77,7 +77,7 @@ class MailService
                 $information = ['team@comeety.net' => 'Comeety.net'];
                 break;
             default:
-                $information = ['team@comeety.net' => 'Johan'];
+                $information = ['team@comeety.net' => 'Your name'];
         }
         return $information;
     }
